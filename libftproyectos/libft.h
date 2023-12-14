@@ -6,7 +6,7 @@
 /*   By: maruiz-p <maruiz-p@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 17:17:20 by maruiz-p          #+#    #+#             */
-/*   Updated: 2023/11/23 17:49:18 by maruiz-p         ###   ########.fr       */
+/*   Updated: 2023/12/07 21:57:17 by maruiz-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 
 // get_next_line functions
-int					get_next_line(int fd, char **line);
+char				*get_next_line(int fd);
 char				*ft_strjoin_gnl(char *s1, char *s2);
 char				*ft_strchr_gnl(const char *s, int c);
 char				*ft_strdup_gnl(const char *s);

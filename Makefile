@@ -6,7 +6,7 @@
 #    By: maruiz-p <maruiz-p@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 18:03:55 by maruiz-p          #+#    #+#              #
-#    Updated: 2023/11/21 16:54:26 by maruiz-p         ###   ########.fr        #
+#    Updated: 2023/11/24 12:29:11 by maruiz-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 SO_LONG_PATH = ./so_long
 MLX_FLAGS = -Imlx -Lmlx/ -lmlx -framework OpenGL -framework AppKit
-MLX_PATH = ./mlx
-MLX = $(MLX_PATH)/libmlx.a
+MLX_PATH = ./MLX42
+MLX = $(MLX_PATH)/libmlx42.a
 LIBFT_PATH = ./libftproyectos
 LIBFT = $(LIBFT_PATH)/libft.a
 
