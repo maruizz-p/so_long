@@ -6,11 +6,11 @@
 /*   By: maruiz-p <maruiz-p@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 10:51:05 by maruiz-p          #+#    #+#             */
-/*   Updated: 2023/06/26 15:10:22 by maruiz-p         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:31:10 by maruiz-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static void	ft_putnbr(long int n)
 {

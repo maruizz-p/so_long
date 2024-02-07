@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   resize.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maruiz-p <maruiz-p@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 20:07:19 by maruiz-p          #+#    #+#             */
-/*   Updated: 2024/01/20 21:41:17 by maruiz-p         ###   ########.fr       */
+/*   Created: 2024/01/17 16:02:05 by maruiz-p          #+#    #+#             */
+/*   Updated: 2024/01/28 01:06:20 by maruiz-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ft_error(char *error)
+void	resize_wdow(int width, int height, void *param)
 {
-	ft_printf("%s\n", error);
-	exit (EXIT_FAILURE);
+	(void)width;
+	(void)height;
+	(void)param;
+	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
 }

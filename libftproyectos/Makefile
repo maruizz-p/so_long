@@ -48,14 +48,11 @@ SRC = ft_isalnum.c\
 	ft_printptr.c\
 	ft_putchar.c\
 	ft_putstr.c\
-	ft_putstr.c\
 	ft_strlen_printf.c\
 	ft_unsigned.c\
 	get_next_line.c\
 	get_next_line_utils.c\
-	get_next_line_bonus.c\
-	get_next_line_utils_bonus.c\
-BONUS = ft_lstnew_bonus.c\
+	ft_lstnew_bonus.c\
 	ft_lstadd_front_bonus.c\
 	ft_lstsize_bonus.c\
 	ft_lstlast_bonus.c\
@@ -67,33 +64,20 @@ BONUS = ft_lstnew_bonus.c\
 
 OBJS := $(SRC:.c=.o)
 
-BONUS_OBJS = $(BONUS:.c=.o)
-
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(LIB) $(NAME) $(OBJS)
 
-$(BONUS_OBJS) : $(BONUS)
-	$(CC) $(CFLAGS) -c $(BONUS)
-
-bonus: $(BONUS_OBJS) $(OBJS)
-	$(LIB) $(NAME) $(BONUS_OBJS) $(OBJS)
+$(OBJS): %.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@$(CLEAN) $(OBJS) $(BONUS_OBJS)
+	@$(CLEAN) $(OBJS)
 
 fclean: clean
-	@$(CLEAN) $(NAME) $(BONUS_OBJS)
+	@$(CLEAN) $(NAME)
 
 re: fclean all
 
-.PHONY : all clean fclean re bonus
-
-	 ▄▀▀█▄   ▄▀▀▄ █  ▄▀▀▄ █  ▄▀▀▄ ▄▀▀▄ 
-	▐ ▄▀ ▀▄ █  █ ▄▀ █  █ ▄▀ █   █    █ 
-	  █▄▄▄█ ▐  █▀▄  ▐  █▀▄  ▐  █    █  
-	 ▄▀   █   █   █   █   █   █    █   
-	█   ▄▀  ▄▀   █  ▄▀   █     ▀▄▄▄▄▀  
-	▐   ▐   █    ▐  █    ▐             
-	        ▐       ▐                  
+.PHONY : all clean fclean re

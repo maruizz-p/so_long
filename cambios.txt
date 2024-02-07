@@ -1,0 +1,10 @@
+he modificado main validator de void a int.
+
+
+
+
+DEFINIR TAMAÑO IMAGENES Y TEXTURAS ADEMAS DE LA VENTANA (PARA QUE EL MAPA ESTE BIEN CENTRADO)
+gcc prueba.c MLX42/build/libmlx42.a -Iinclude -lglfw -L "/Users/maruiz-p/.brew/opt/glfw/lib/" -o so_long
+
+
+HACER TODAS LAS FUNCIONES DE MLX_IMAGE_TO_WINDOW (INITIALIZE IMG so_long.c)

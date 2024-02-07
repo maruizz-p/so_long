@@ -6,17 +6,18 @@
 /*   By: maruiz-p <maruiz-p@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 17:17:20 by maruiz-p          #+#    #+#             */
-/*   Updated: 2023/12/07 21:57:17 by maruiz-p         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:37:31 by maruiz-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <fcntl.h>
+# include <stdarg.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdarg.h>
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
 # endif
@@ -77,9 +78,9 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 // get_next_line functions
 char				*get_next_line(int fd);
 char				*ft_strjoin_gnl(char *s1, char *s2);
-char				*ft_strchr_gnl(const char *s, int c);
+int					ft_strchr_gnl(const char *s, int c);
 char				*ft_strdup_gnl(const char *s);
-char				*ft_calloc_gnl(size_t count, size_t size);
+void				*ft_calloc_gnl(size_t count, size_t size);
 size_t				ft_strlen_gnl(const char *str);
 void				ft_bzero_gnl(void *s, size_t n);
 char				*nextline(char *txt);
@@ -89,7 +90,7 @@ char				*readline(int fd, char *txt);
 // printf functions
 int					ft_printf(const char *str, ...);
 int					ft_unsigned(unsigned int u);
-int					ft_strlen_printf(const char *str);
+int					ft_strlen_printf(char *str);
 int					ft_putstr(char *str);
 int					ft_putchar(char c);
 int					ft_printptr(unsigned long long ptr);

@@ -6,36 +6,56 @@
 #    By: maruiz-p <maruiz-p@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 18:03:55 by maruiz-p          #+#    #+#              #
-#    Updated: 2023/11/24 12:29:11 by maruiz-p         ###   ########.fr        #
+#    Updated: 2024/02/07 12:38:52 by maruiz-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-RM = rm -f
-SO_LONG_PATH = ./so_long
-MLX_FLAGS = -Imlx -Lmlx/ -lmlx -framework OpenGL -framework AppKit
-MLX_PATH = ./MLX42
+
+SRC = src/so_long.c src/player.c src/readmap.c src/resize.c src/parser.c src/mapchecker.c src/images.c src/ft_error.c src/flood_fill.c src/count_objects.c src/handler.c
+
+OBJ = $(SRC:.c=.o)
+
+MLX_PATH = MLX42
 MLX = $(MLX_PATH)/libmlx42.a
-LIBFT_PATH = ./libftproyectos
+
+LIBFT_PATH = libftproyectos
 LIBFT = $(LIBFT_PATH)/libft.a
 
-all: so_long
+CC = gcc
+CFLAGS = -g
 
-so_long: so_long.o main.o
-	$(CC) $(CFLAGS) -o so_long so_long.o main.o -L. -lmlx -lXext -lX11
+LIB = ar rcs
+LIB_SYS = -I include -lglfw -L "/Users/maruiz-p/.brew/opt/glfw/lib"
 
-so_long.o: so_long.c so_long.h
-	$(CC) $(CFLAGS) -c so_long.c
+RM = rm -fr
 
-main.o: main.c so_long.h
-	$(CC) $(CFLAGS) -c main.c
+all: $(NAME)
+
+$(NAME): $(OBJ) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -o $(NAME) $(LIB_SYS)
+
+$(OBJ): src/%.o : src/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(LIBFT):
+	@make -C $(LIBFT_PATH)
+
+$(MLX):
+	@make -C $(MLX_PATH)
 
 clean:
-	$(RM) so_long.o main.o
+	$(RM) $(OBJ)
+	make clean -C $(MLX_PATH)
+	make clean -C $(LIBFT_PATH)
 
-fclean: clean
-	$(RM) so_long
+fclean:
+	$(RM) $(NAME) $(OBJ) $(LIBFT) $(MLX)
+	make fclean -C $(MLX_PATH)
+	make fclean -C $(LIBFT_PATH)
 
 re: fclean all
+
+solong: all clean
+
+.PHONY: all re clean fclean solong

@@ -6,93 +6,97 @@
 /*   By: maruiz-p <maruiz-p@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 21:23:46 by maruiz-p          #+#    #+#             */
-/*   Updated: 2023/12/14 16:07:06 by maruiz-p         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:51:30 by maruiz-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	main_validator(char *map_path, t_params *params)
+int	main_validator(char *map_path, t_data *data)
 {
-	int	fd;
-
 	if (!mapchecker(map_path))
 		ft_error("Formato de archivo no válido");
-	fd = open(map_path);
-	if (fd < 0)
-		ft_error("Error al abrir el archivo");
-	parse_map(fd, params);
-	if (!surrounded_by_walls(params))
+	readmap(data, map_path);
+	if (!surrounded_by_walls(data))
 		ft_error("El mapa no está rodeado por muros");
-	close(fd);
+	return (0);
 }
 
-int	process_map_line(char *map_line, t_params *params)
+int	process_map_line(t_data *data, char *map_line, int y)
 {
-	params->x = 0;
-	while (map_line[params->x])
+	int	x;
+
+	x = 0;
+	while (map_line[x])
 	{
-		if (!ft_strchr("01PEC", map_line[params->x]))
+		if (!ft_strchr("01PEC", map_line[x]))
 			return (1);
-		params->x++;
+		else if (map_line[x] == 'P')
+			handle_p_position(data, x, y);
+		else if (map_line[x] == 'E')
+			handle_e_location(data, x, y);
+		else if (map_line[x] == 'C')
+			handle_c_instance(data);
+		x++;
 	}
 	return (0);
 }
 
-int	allocate_memory_and_check_rectangular(t_params *params)
+int	allocate_memory_and_check_rectangular(char *map_line, t_data *data)
 {
-	if (params->y == 0)
+	data->size.x = ft_strlen(map_line);
+	if (data->size.x != data->x_max)
 	{
-		params->map = (char **)malloc(sizeof(char *) * (params->y + 1));
-		params->x_max = params->x;
-	}
-	else if (params->x != params->x_max)
-	{
-		return (2);
+		return (1);
 	}
 	return (0);
 }
 
-int	parse_map(int fd, t_params *params)
+int	parse_map(int fd, t_data *data)
 {
 	char	*map_line;
 	char	*temp;
 	int		error_code;
 
-	params->y = 0;
+	data->size.y = 0;
 	temp = get_next_line(fd);
+	if (!temp)
+		ft_error("File is a directory!");
 	while (temp != NULL)
 	{
 		map_line = ft_strtrim(temp, "\n");
+		error_code = process_map_line(data, map_line, data->size.y);
+		if (error_code != 0)
+			ft_error("Invalid map character found!");
+		data->map[data->size.y] = map_line;
+		data->map_copy[data->size.y++] = map_line;
+		error_code = allocate_memory_and_check_rectangular(map_line, data);
+		if (error_code != 0)
+			ft_error("Invalid map shape!");
 		free(temp);
-		error_code = process_map_line(map_line, params);
-		if (error_code != 0)
-			return (error_code);
-		error_code = allocate_memory_and_check_rectangular(params);
-		if (error_code != 0)
-			return (error_code);
-		params->map[params->y++] = map_line;
+		temp = get_next_line(fd);
 	}
-	params->map[params->y] = NULL;
-	return (0);
+	data->coin_instances = malloc(sizeof(t_coin_instance *)
+			* data->coin_instances_num);
+	return (data->map[data->size.y] = NULL, 0);
 }
 
-int	surrounded_by_walls(t_params *params)
+int	surrounded_by_walls(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < params->x_max)
+	while (i < data->size.x)
 	{
-		if (params->map[0][i] != '1' || params->map[params->y - 1][i] != '1')
+		if (data->map[0][i] != '1' || data->map[data->size.y - 1][i] != '1')
 			return (0);
 		i++;
 	}
 	j = 0;
-	while (j < params->y)
+	while (j < data->size.y)
 	{
-		if (params->map[j][0] != '1' || params->map[j][params->x_max
+		if (data->map[j][0] != '1' || data->map[j][ft_strlen(data->map[j])
 			- 1] != '1')
 			return (0);
 		j++;
